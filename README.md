@@ -8,34 +8,35 @@ To write a program to predict the price of the house and number of occupants in 
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+1.Load California housing data, select features and targets, and split into training and testing sets.
+2.Scale both X (features) and Y (targets) using StandardScaler.
+3.Use SGDRegressor wrapped in MultiOutputRegressor to train on the scaled training data.
+4.Predict on test data, inverse transform the results, and calculate the mean squared error.
 
 ## Program:
-Name : Lakshanya.N
-Reg No : 212224230136
+/*
+Program to implement the multivariate linear regression model for predicting the price of the house and number of occupants in the house with SGD regressor.
+Developed by: N.Lakshanya
+RegisterNumber: 212224230136
+*/
 ```
+import numpy as np
 import pandas as pd
 from sklearn.datasets import fetch_california_housing
 from sklearn.linear_model import SGDRegressor
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error
 ```
 ```
 dataset = fetch_california_housing()
 df = pd.DataFrame(dataset.data, columns=dataset.feature_names)
-df['HousingPrice'] = dataset.target
-print(df.head())
+df["HousingPrice"] = dataset.target
 ```
 ```
-X = df.drop(columns=['AveOccup', 'HousingPrice'])  # Independent variables
-X.info()
-Y = df[['AveOccup', 'HousingPrice']]  # Dependent variables (Multi-output)
-Y.info()
+X = df.drop(columns=['AveOccup','HousingPrice'])
+Y = df[['AveOccup','HousingPrice' ]]
 ```
 ```
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
@@ -43,6 +44,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_
 ```
 scaler_X = StandardScaler()
 scaler_Y = StandardScaler()
+```
+```
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
 Y_train = scaler_Y.fit_transform(Y_train)
@@ -57,15 +60,15 @@ multi_output_sgd.fit(X_train, Y_train)
 Y_pred = multi_output_sgd.predict(X_test)
 Y_pred = scaler_Y.inverse_transform(Y_pred)
 Y_test = scaler_Y.inverse_transform(Y_test)
+```
+```
 mse = mean_squared_error(Y_test, Y_pred)
 print("Mean Squared Error:", mse)
-print("\nPredictions:\n", Y_pred[:5])
+print("\nFirst 5 Predictions:\n", Y_pred[:5])
 ```
-
 ## Output:
 
-![image](https://github.com/user-attachments/assets/c42b7862-e545-433b-9236-a43d6ec0d13c)
-
+![image](https://github.com/user-attachments/assets/e7df7e62-45f5-4919-a00a-6b29e416748e)
 
 ## Result:
 Thus the program to implement the multivariate linear regression model for predicting the price of the house and number of occupants in the house with SGD regressor is written and verified using python programming.
